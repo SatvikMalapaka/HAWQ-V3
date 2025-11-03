@@ -4,9 +4,9 @@ import numpy as np
 from pulp import *
 import pulp
 
-def ilp_main_bops(model, device = 'cpu', modified_hawq = True, bops_limit_factor = 0.5):
+def ilp_main_bops(model, modified_hawq = True, bops_limit_factor = 0.5):
   model.eval()
-  model.to(device)
+  model = model.to('cpu')
   l2_norms = {}
   #If 2-8 bits or just [4,8] bits
   if modified_hawq:
@@ -31,8 +31,8 @@ def ilp_main_bops(model, device = 'cpu', modified_hawq = True, bops_limit_factor
     bops_bit[i] = bops * i  / 1000000     #Scaled to prevent blowing up of values
     
   #Finding Hessian and number of parameters of every layer
-  dummyinput = torch.randn(1, 3, 32, 32).to(device) #random image input
-  dummytarget = torch.tensor([3]).to(device)  # random target class
+  dummyinput = torch.randn(1, 3, 32, 32) #random image input
+  dummytarget = torch.tensor([3]) # random target class
   print("Calculation Hutchinsons Trace......")
   results_hessian = hutchinson(model, dummyinput, dummytarget, num_samples=10)
   print("Finished Calculating Trace")
