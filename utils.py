@@ -20,7 +20,7 @@ def evaluate(model, dataloader, device):
             top1 += (preds == labels).sum().item()
 
     top1_acc = 100 * top1 / total
-    print(f"\n🎯 Top-1 Accuracy: {top1_acc:.2f}%")
+    print(f"Top-1 Accuracy: {top1_acc:.2f}%")
     return top1_acc
 
 def uniform_quantize(tensor, num_bits):
