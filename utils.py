@@ -3,7 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
-from tqdm import tqdm, optim 
+from tqdm import tqdm 
+from torch import optim
 
 def evaluate(model, dataloader, device):
     model.eval()
@@ -359,4 +360,3 @@ def recalibrate_bn(model, loader, device, num_batches=10):
             images = images.to(device)
             _ = model(images)
     print(f"Recalibrated BN with {num_batches} batches.")
-
