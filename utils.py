@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
-from tqdm import tqdm 
+from tqdm import tqdm
 from torch import optim
 
 def evaluate(model, dataloader, device):
@@ -20,7 +20,7 @@ def evaluate(model, dataloader, device):
             top1 += (preds == labels).sum().item()
 
     top1_acc = 100 * top1 / total
-    print(f"Top-1 Accuracy: {top1_acc:.2f}%")
+    print(f"\nTop-1 Accuracy: {top1_acc:.2f}%")
     return top1_acc
 
 def uniform_quantize(tensor, num_bits):
@@ -137,6 +137,7 @@ def fine_tune(
     num_epochs=5,
     lr=1e-4,
     device=None,
+    save_file = "best_finetuned_quantized.pth",
     save_best=True,
 ):
     
@@ -176,7 +177,7 @@ def fine_tune(
             val_acc = evaluate_model_loss(model, val_loader, criterion, device)
             if save_best and val_acc > best_acc:
                 best_acc = val_acc
-                torch.save(model.state_dict(), "best_finetuned_quantized.pth")
+                torch.save(model.state_dict(), save_file)
 
     if val_loader is not None:
         print(f"\nBest Validation Accuracy: {best_acc:.2f}%")
