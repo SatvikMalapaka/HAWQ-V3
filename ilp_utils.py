@@ -32,7 +32,7 @@ def l2_diff_conv_linear(model, bit_a=8, device="cpu"):
 
     return l2_diffs
 
-def get_conv_bitops(model, input_size=(1, 3, 32, 32), w_bits=4, a_bits=8, device="cpu"):
+def get_bitops(model, input_size=(1, 3, 32, 32), w_bits=4, a_bits=8, device="cpu"):
     model = model.to(device)
     model.eval()
 
